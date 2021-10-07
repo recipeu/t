@@ -1,0 +1,73 @@
+date: <%var justnow = new Date(Date.now()); var oneyearbefore = new Date(new Date().setMonth(new Date().getMonth() + 3)); var dt = randomDate(justnow, oneyearbefore, 9, 17);%><%=dt.toISOString()%>
+<% if(!_.isEmpty(data.image)) {%>image: <%= data.image%>
+thumbnail: <%= data.image %>
+cover: <%= data.image %><%}%>
+author: <%= chance.name() %>
+ratingvalue: <%= chance.floating({min: 3, max: 5, fixed: 1}) %>
+reviewcount: <%= chance.integer({min: 3, max: 15}) %>
+recipeingredient:
+<% data.ingredients.forEach(function(ingredient, index){ %>- "<%= ingredient.quantity %> <%= ingredient.name.replace(/[^\w\s]/gi, "").replace(/\n/g, " ") %>"<%= (index < data.ingredients.length-1) ? "\n": ""  %><% }); %>
+recipeinstructions:
+<% data.steps.forEach(function(step, index){ %>- "<%= step.instruction.replace(/\n/g, " ").replace(/:/g,"\:").replace(/\\/g, "/") %>"<%= (index < data.steps.length-1) ? "\n" : "" %><% }); %>
+categories:
+- Resep
+tags:
+<% var bersih1 = data.title.replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, "").trim(); var bersih2 = bersih1.replace(/[^\w\s]/gi, "").trim(); var bersih3 = bersih2.replace(/[\s\s]/gi, " ").trim(); var bersih4 = bersih3.replace(/[\s\s]/gi, " ").trim(); var hurufkecil = bersih4.toLowerCase().trim(); var kata = hurufkecil.split(" ",3); for (i = 0; i < kata.length; i++) { %><%= "- "+kata[i]+"\n" %><% } %>
+katakunci: <% for (i = 0; i < kata.length; i++) { %><%= kata[i]+" "%><%}%>
+nutrition: <%=chance.integer({min:100,max:300})%> calories
+recipecuisine: Indonesian
+preptime: "PT<%=chance.integer({min:10,max:40})%>M"
+cooktime: "PT<%=chance.integer({min:30,max:60})%>M"
+recipeyield: "<%=chance.integer({min:1,max:4})%>"
+recipecategory: <%var recipeCat = ["Dessert", "Dinner", "Lunch"];%><%=recipeCat[Math.floor(Math.random()*recipeCat.length)];%>
+<% if(data.related_keywords!="") { %>keywords:
+    - <%= data.related_keywords.join("\n- ") %><% } %>
+---
+<% var sentences = collect(data.sentences); %>
+<% if(!_.isEmpty(data.image)) { %>
+![<%= data.title %>](<%= data.image %>)<% } %>
+
+<% var a1 = "{Resep|Resep rahasia {dan cara memasak|dan cara mengolah}}  " + data.title + "  {anti gagal|enak|sederhana| | }" %>
+<% var a2 = "{resep|resep rahasia {dan cara memasak|dan cara mengolah}}  " + data.title + "  {anti gagal|enak|sederhana| | } dengan "+ data.steps.lenght +" langkah {mudah|cepat|mudah dan cepat|cepat dan mudah}" %>
+<% var a3 = data.steps.lenght +" langkah {mudah|cepat|mudah dan cepat|cepat dan mudah} {membuat|mengolah|memasak}  " + data.title + "  {anti gagal|enak|sederhana| }" %>
+<% var a4 = "Ingin membuat "+ data.title +" ? Coba saja resep berikut ini. Cara memasaknya sangat praktis {namun|namun jangan kaget jika} hasilnya gurih dan lezat, Resep ini {sangat pas|cocok} untuk {ibu|kamu|bibi} {coba|peraktekkan}" %>
+                            <!-- kalimat lanjutan -->
+<% var b1 = "Cocok untuk {hidangan penutup|hidangan pembuka|dihidangkan untuk keluarga|dihidangkan untuk teman|dihidangkan untuk tamu}"
+<% var b2 = "yang {harus|wajib|musti} {ibu|kamu|bibi} coba {dirumah|segera}"
+                            <!-- penutup -->
+< var z0 = "Terima kasih telah {membaca|menggunakan} resep yang {tim kami|kami} tampilkan di {sini|halaman ini}. {Semoga bermanfaat dan selamat mencoba!|Selamat mencoba!}"
+<% var z1 = "Salah satu {kuliner|masakan} yang cukup praktis {dalam pembuatannya|pembuatannya} adalah  " + data.title + ". Selain itu  " + data.title + "  juga cukup banyak digemari oleh semua kalangan, Cara penyajiannya juga cukup mudah, cukup sediakan bahan-bahan diatas lalu "+ data.steps.leght +" langkah, dan  " + data.title + "  pun siap di hidangkan" selamat mencoba !">
+<% var z2 = "Daripada {ibu|kamu| |bibi} beli  " + data.title + "  diluaran terus, {ibu|kamu|bibi}  bisa membuatnya sendiri dirumah. Resep  " + data.title + "  sederhana ini cukup praktis {dalam proses pembuatannya|pembuatannya}, {serta cukup|cukup} menggunakan {bumbu-bumbu sederhana yang ada di dapur|bumbu sederhana}  " + data.title + "  yang enak, {ibu|kamu|bibi} nikmati di rumah." %>
+<% var z4 = "Demikian informasi  resep " + data.title + "   yang bisa Anda coba di rumah. Semoga informasi ini bisa bermanfaat bagi Anda. Terima kasih telah berkujung ke web kami" %>
+<% var z3 = "Selamat {memasak dan menikmati|menikmati} hidangan spesial ini bersama keluarga. Salam Istimewa." %>
+
+
+
+                            <!-- variable content -->
+<% var peng = [a1, a2, a3, a4] %> 
+<% var peng1 = [b1,b2] %>
+<% var pen = [z0, z2, z3, z4] %>
+
+
+
+<%= peng[Math.floor(Math.random()*peng.length)]; %> <%= peng1[Math.floor(Math.random()*peng1.length)]; %>
+
+
+<!--inarticleads1-->
+
+##### {Bahan-bahan|Beberapa Bahan} Yang {Dibutuhkan|Diperlukan|Digunakan} {Untuk|Dalam} {Pembuatan|Menyiapkan} <%= data.title %>:
+
+<% data.ingredients.forEach(function(ingredient){ %>1. {Ambil|Siapkan|Gunakan|Sediakan} <%= ingredient.quantity %> <%= ingredient.name.replace(/\n/g, " ")+"\n"%><% }); %>
+
+<% _.slice(data.sentences, 8, 12).forEach(function(sentence){ %><%= sentence.replace(/'/g, "\'").replace(/"/g, "\"")+" " %><% }); %>
+
+<!--inarticleads2-->
+
+##### {Langkah-langkah Untuk|Tata Cara|Cara Mudah|Cara} {Menyiapkan|Membuat} <%= data.title %>:
+
+<% data.steps.forEach(function(step){ %>1. <%= step.instruction.replace(/\n/g, " - ").replace(/\\/g, "/")+"\n" %><% console.log(step.images.length); %><% if(step.images.length > 0){ %><% step.images.forEach(function(image){ %><img src="<%= image %>" alt="<%= data.title %>"><% }); %><% } %><% }); %>
+
+<% _.slice(data.sentences, 12, 17).forEach(function(sentence){ %><%= sentence.replace(/'/g, "\'").replace(/"/g, "\"")+" " %><% }); %>
+
+
+<%= pen[Math.floor(Math.random()*pen.length)]; %>
