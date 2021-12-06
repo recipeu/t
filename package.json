@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "@gizt/selector": "^1.0.9",
+    "arr-diff": "^4.0.0",
+    "cachejs": "^0.1.24",
+    "fs-extra": "^10.0.0",
+    "json-2-csv": "^3.14.4",
+    "jsonfile": "^6.1.0",
+    "mel-spintax": "^1.0.4",
+    "moment": "^2.29.1",
+    "moment-random": "^1.1.0",
+    "moment-range": "^4.0.2",
+    "random-date-generator": "^1.0.2",
+    "random-moment": "^1.1.1",
+    "randomdate": "0.0.1",
+    "write": "^2.0.0",
+    "yarn": "^1.22.17"
+  }
+}
